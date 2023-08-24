@@ -35,19 +35,19 @@ jobs:
           export PATH=$(python3 -c "import cmake; print(cmake.CMAKE_BIN_DIR)"):$PATH
           python3 -m sphinx_multiversion . _build/html/
 
-      - name: Update docs
-        run: |
-          mkdir /tmp/triton-docs
-          mv docs/_build/html/* /tmp/triton-docs/
-          git checkout gh-pages
-          cp -r CNAME /tmp/triton-docs/
-          cp -r index.html /tmp/triton-docs/
-          cp -r .nojekyll /tmp/triton-docs/
-          rm -r *
-          cp -r /tmp/triton-docs/* .
-          git add .
-          git commit -am "[GH-PAGES] Updated website"
+      # - name: Update docs
+      #   run: |
+      #     mkdir /tmp/triton-docs
+      #     mv docs/_build/html/* /tmp/triton-docs/
+      #     git checkout gh-pages
+      #     cp -r CNAME /tmp/triton-docs/
+      #     cp -r index.html /tmp/triton-docs/
+      #     cp -r .nojekyll /tmp/triton-docs/
+      #     rm -r *
+      #     cp -r /tmp/triton-docs/* .
+      #     git add .
+      #     git commit -am "[GH-PAGES] Updated website"
 
-      - name: Publish docs
-        run: |
-          git push origin gh-pages
+      # - name: Publish docs
+      #   run: |
+      #     git push origin gh-pages
