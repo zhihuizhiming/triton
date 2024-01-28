@@ -318,6 +318,8 @@ class CompiledKernel:
         - cta_dim_z: int
         - shared_memory: int
         - stream: int
+        - function: int
+        - metadata: KernelMetadata
         - args: tuple
         The return value of the function should be a dictionary of metrics, where the key
         is the name of the metric and the value is the value of the metric.
