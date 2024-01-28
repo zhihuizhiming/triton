@@ -12,6 +12,7 @@ from ..backends.nvidia.compiler import InfoFromBackendForTensorMap
 from dataclasses import dataclass
 from .code_generator import ast_to_ttir
 from pathlib import Path
+from typing import Callable, Union
 import re
 import functools
 import os
@@ -303,6 +304,31 @@ class CompiledKernel:
         # (e.g., checking amount of shared memory on current device)
         self.module = None
         self.function = None
+
+    def set_metrics_fn(self, metrics_fn: Callable[[], dict[str, Union[int, float]]]):
+        """
+        Set a function that will be called before each kernel launch to collect metrics.
+        The arguments of the function are:
+        - grid_x: int
+        - grid_y: int
+        - grid_z: int
+        - num_warps: int
+        - num_ctas: int
+        - cta_dim_x: int
+        - cta_dim_y: int
+        - cta_dim_z: int
+        - shared_memory: int
+        - stream: int
+        - args: tuple
+        The return value of the function should be a dictionary of metrics, where the key
+        is the name of the metric and the value is the value of the metric.
+        Values of type int or float are supported.
+        The profiler may aggregate metrics of the same name across multiple kernel launches.
+        """
+        self.metadata = self.metadata._replace(metrics_fn=metrics_fn)
+
+    def unset_metrics_fn(self):
+        self.metadata = self.metadata._replace(metrics_fn=None)
 
     def _init_handles(self):
         if self.module is not None:
