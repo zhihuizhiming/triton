@@ -307,20 +307,6 @@ class CompiledKernel:
     def set_metrics_fn(self, metrics_fn: Callable[[], dict[str, Union[int, float]]]):
         """
         Set a function that will be called before each kernel launch to collect metrics.
-        The arguments of the function are:
-        - grid_x: int
-        - grid_y: int
-        - grid_z: int
-        - num_warps: int
-        - num_ctas: int
-        - cta_dim_x: int
-        - cta_dim_y: int
-        - cta_dim_z: int
-        - shared_memory: int
-        - stream: int
-        - function: int
-        - metadata: KernelMetadata
-        - args: tuple
         The return value of the function should be a dictionary of metrics, where the key
         is the name of the metric and the value is the value of the metric.
         Values of type int or float are supported.
